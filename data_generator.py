@@ -28,9 +28,9 @@ def data_generator(csv='data/challenge_1_gut_microbiome_data.csv'):
     for i, col in enumerate(mndf_cols):
         rows = mean_normalized_df[col]
         for j, row in enumerate(rows):
-            if row < -3:
+            if row < -5:
                 mean_normalized_df.at[j, col] = -5
-            elif row > 3:
+            elif row > 5:
                 mean_normalized_df.at[j, col] = 5
 
     # getting the labels
