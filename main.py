@@ -21,11 +21,25 @@ if __name__ == '__main__':
         help='which model would you like to run',
         default='simple_branchy_linear_network'
     )
+    parser.add_argument(
+        '--epochs', 
+        type=int, 
+        help='how many epochs',
+        default=12
+    )
+    parser.add_argument(
+        '--verbose', 
+        type=int, 
+        help='0,1,2',
+        default=1
+    )
 
     args = parser.parse_args()
     model_ = args.model
+    epochs = args.epochs
+    verbose = args.verbose
 
-    X_train, X_test, y_train, y_test, class_weight = data_generator(
+    X_train, X_test, y_train, y_test, y_train_categorical, y_test_categorical, class_weight = data_generator(
         'data/challenge_1_gut_microbiome_data.csv'
     )
 
@@ -60,14 +74,14 @@ if __name__ == '__main__':
         monitor='val_loss',
         factor=0.5,
         patience=5,
-        verbose=1,
+        verbose=verbose,
         min_lr=1e-8,
     )
 
     checkpoint = tf.keras.callbacks.ModelCheckpoint(
         'models/checkpoint',
         monitor='val_cohen_kappa',
-        verbose=1,
+        verbose=verbose,
         save_best_only=True,
         mode='max',
         save_weights_only=False
@@ -76,11 +90,11 @@ if __name__ == '__main__':
     # fit the model
     model.fit(
         x=X_train,
-        y=y_train,
+        y=y_train_categorical,
         batch_size=16,
-        epochs=12,
-        verbose=1,
-        validation_data=(X_test, y_test),
+        epochs=epochs,
+        verbose=verbose,
+        validation_data=(X_test, y_test_categorical),
         shuffle=True,
         callbacks=[
             reduce_lr,

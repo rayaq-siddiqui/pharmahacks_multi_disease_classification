@@ -6,7 +6,7 @@ from tensorflow.keras.models import Model
 def dual_input_model():
     inp = Input(shape=(1094,))
 
-    x2 = Dense(512, activation='relu')(inp)
+    x1 = Dense(512, activation='relu')(inp)
     x1 = Dense(512, activation='relu')(x1)
     x1 = Dense(256, activation='relu')(x1)
     x1 = Dense(128, activation='relu')(x1)

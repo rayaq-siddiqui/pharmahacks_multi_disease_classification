@@ -73,4 +73,4 @@ def data_generator(csv='data/challenge_1_gut_microbiome_data.csv'):
     class_weight = class_weight / sum
 
     # return
-    return X_train, X_test, y_train_categorical, y_test_categorical, class_weight
+    return X_train, X_test, y_train, y_test, y_train_categorical, y_test_categorical, class_weight
